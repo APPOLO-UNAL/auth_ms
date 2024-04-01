@@ -40,7 +40,6 @@ This command builds the Docker images and starts the containers, including the R
     ```bash
     docker-compose up --build
     
-
 ## Testing the Microservice
 
 To test the functionality of the microservice, you can use Postman or any similar API testing tool.
