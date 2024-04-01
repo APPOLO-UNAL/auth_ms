@@ -28,7 +28,7 @@ To get the microservice running on your local machine, follow these steps:
    git clone https://github.com/Naimuru/auth_ms.git
    cd auth_ms
 
-2. **Build the image*
+2. **Build the image**
 This command builds the docker image.
 
    ```bash
@@ -46,7 +46,7 @@ This command builds the Docker images and starts the containers, including the R
 To test the functionality of the microservice, you can use Postman or any similar API testing tool.
 
 - Register a New User
-POST /api/v1/sign_up with a JSON body containing the user's email and password:
+POST request - Endpoint: /api/v1/sign_up | with a JSON body containing the user's email and password.
 
    ```bash
    {
@@ -58,7 +58,7 @@ POST /api/v1/sign_up with a JSON body containing the user's email and password:
    }
 
 - Login
-POST /api/v1/sign_in with the user's credentials.
+POST request - Endpoint: /api/v1/sign_in | with the user's credentials.
 
    ```bash
    {
