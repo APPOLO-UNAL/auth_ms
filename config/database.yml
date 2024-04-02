@@ -11,7 +11,7 @@ development:
   database: apollo_api_development
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db
+  #host: db # Uncomment this line when running it locally
 
 test:
   <<: *default
