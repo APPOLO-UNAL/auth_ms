@@ -39,6 +39,12 @@ This command builds the Docker images and starts the containers, including the R
 
     ```bash
     docker-compose up --build
+
+3. **Migrate the db**
+Run in another terminal this command since we need to migrate the db.
+
+    ```bash
+    docker-compose exec web bin/rails db:migrate
     
 ## Testing the Microservice
 
