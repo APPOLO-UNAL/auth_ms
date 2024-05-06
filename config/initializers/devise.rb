@@ -14,7 +14,7 @@ Devise.setup do |config|
   config.reset_password_within = 6.hours
   config.sign_out_via = :delete
   config.responder.error_status = :unprocessable_entity
-  config.responder.redirect_status = :see_other
+  config.responder.redirect_status = :see_othe
 
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise_jwt_private_key
@@ -28,7 +28,7 @@ Devise.setup do |config|
       ['DELETE', %r{^/api/v1/sign_out$}]  # Adjusted for sign-out endpoint
     ]
     jwt.expiration_time = 1.day.to_i
-    jwt.aud_header = 'JWT_AUD'  # Use default aud_header
+    jwt.aud_header = 'JWT_AUD'  # Use default aud_heade
   end
   
 end
