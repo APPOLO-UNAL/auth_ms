@@ -1,13 +1,34 @@
-version: '3'
+version: '3.8'
+
 services:
-  db:
-    image: postgres
+  appolo-ldap:
+    image: osixia/openldap:1.1.8
+    container_name: appolo_ldap
+    environment:
+      - LDAP_ORGANISATION=Software Architecture
+      - LDAP_DOMAIN=arqsoft.unal.edu.co
+      - LDAP_BASE_DN=dc=arqsoft,dc=unal,dc=edu,dc=co
+      - LDAP_ADMIN_PASSWORD=admin
+      - LDAP_CONFIG_PASSWORD=config
+    ports:
+      - "389:389"
+      - "636:636"
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+
+  db:
+    image: postgres:latest
+    container_name: auth_ms_db
     environment:
       POSTGRES_DB: apollo_api_development
       POSTGRES_USER: naimu
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
   web:
     build: .
@@ -24,3 +45,10 @@ services:
       DATABASE_PASSWORD: password
     depends_on:
       - db
+      - appolo-ldap
+
+volumes:
+  ldap_data:
+  ldap_config:
+  db_data:
+  postgres_data:

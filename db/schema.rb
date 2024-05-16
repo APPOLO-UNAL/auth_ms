@@ -22,14 +22,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_055040) do
     t.index ["jti"], name: "index_denylists_on_jti", unique: true
   end
 
-  create_table "jwt_denylists", force: :cascade do |t|
-    t.string "jti"
-    t.datetime "exp"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_jwt_denylists_on_jti"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -38,14 +30,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_055040) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "userName"
     t.string "nickname"
-    t.string "emailAddr"
     t.string "keyIdAuth"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["emailAddr"], name: "index_users_on_emailAddr", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["userName"], name: "index_users_on_userName", unique: true
   end
 
 end
