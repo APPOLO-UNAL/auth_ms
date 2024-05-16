@@ -18,6 +18,8 @@ gem "bootsnap", require: false
 
 #Add devise gem
 gem 'devise'
+gem 'jwt'
+gem 'devise-jwt'
 
 group :development, :test do
   gem 'dotenv-rails'

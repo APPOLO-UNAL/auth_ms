@@ -51,16 +51,38 @@ Run in another terminal this command since we need to migrate the db.
 To test the functionality of the microservice, you can use Postman or any similar API testing tool.
 
 - Register a New User
-POST request - Endpoint: /api/v1/sign_up | with a JSON body containing the user's email and password.
+POST /api/v1/sign_upgit add README.md
+ with a JSON body containing the user's email and password:
 
-   ```bash
-   {
-     "user": {
-       "email": "test9@example.com",
-       "password": "password123",
-       "password_confirmation": "password123"
-     }
-   }
+```bash
+{
+  "user": {
+    "email": "test9@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+  }
+}
+```
+- Login
+POST /api/v1/sign_in with the user's credentials to receive a JWT token:
+```bash
+{
+  "user": {
+    "email": "test9@example.com",
+    "password": "password123"
+  }
+}
+    ```bash
+    {
+    "user": {
+        "email": "test9@example.com",
+        "password": "password123",
+        "password_confirmation": "password123"
+    }
+    }
+```
+- Login
+POST /api/v1/sign_in with the user's credentials to receive a JWT token:
 
 - Login
 POST request - Endpoint: /api/v1/sign_in | with the user's credentials.
