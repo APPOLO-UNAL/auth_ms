@@ -94,3 +94,66 @@ POST request - Endpoint: /api/v1/sign_in | with the user's credentials.
        "password": "password123"
      }
    }
+
+## Testing the Microservice with GraphiQL
+
+To test through GraphiQL, please consider the following mutations:
+
+- Signup
+```bash
+mutation SignupUser($email: String!, $password: String!, $nickname: String!) {
+  signup(email: $email, password: $password, nickname: $nickname) {
+    __typename
+    ... on AuthToken {
+      token 
+      user {
+        id
+        email
+        nickname
+        keyIdAuth
+      }
+    }
+    ... on AuthError {
+      message 
+    }
+  }
+}
+```
+Variables:
+```bash
+   {
+     "user": {
+       "email": "test@example.com",
+       "password": "password123",
+       "nickname": "yournickname" 
+     }
+   }
+```
+
+- Login
+```bash
+mutation LoginUser($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    __typename
+    ... on AuthToken {
+      token
+      user {
+        id
+        email
+        nickname
+        keyIdAuth
+      }
+    }
+    ... on AuthError {
+      message 
+    }
+  }
+}
+```
+Variables:
+```bash
+{
+  "email": "test@example.com",
+  "password": "password123" 
+}
+```
