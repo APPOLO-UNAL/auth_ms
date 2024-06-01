@@ -1,40 +1,46 @@
-module Api
-    module V1
-      class SessionsController < Devise::SessionsController
-        # Skip CSRF protection - removed or commented out the next line
-        # protect_from_forgery with: :null_session
-  
-        before_action :prepare_response_format
-  
-        def create
-          self.resource = warden.authenticate!(auth_options)
-          sign_in(resource_name, resource)
-          render json: { success: true, message: 'Signed in successfully.', user:  resource_data }, status: :ok
-        end
-  
-        def destroy
-          if current_user
-            sign_out
-            render json: { success: true, message: 'Signed out successfully.' }, status: :ok
-          else
-            render json: { success: false, message: 'Could not log out. No user was signed in.' }, status: :unauthorized
-          end
-        end
-  
-        private
-  
-        def resource_data
-          resource.as_json(except: [:emailAddr, :userName])
-        end
-        
-        def prepare_response_format
-          request.format = :json
-        end
-  
-        def respond_to_on_destroy
-          # No redirect or format-specific response needed for API-only applications
-        end
-      end
+class Users::SessionsController < Devise::SessionsController
+  before_action :drop_session_cookie
+  respond_to :json
+
+  def create
+    self.resource = warden.authenticate!(auth_options)
+
+    if resource.persisted? 
+      token = generate_jwt_token(resource) 
+      puts "Response: #{response.inspect}"
+      puts "User data: #{resource_data(resource)}"puts
+      render json: { message: 'Signed in successfully.', token: token, user: resource_data(resource) }, status: :created
+    else
+      puts "Response: #{response.inspect}"
+      puts "User data: #{resource_data(resource)}"puts
+      render json: { message: 'Failed to authenticate with the provided credentials.' }, status: :unauthorized
     end
   end
-  
+
+  def destroy
+    sign_out
+    puts "Response: #{response.inspect}"
+    puts "User data: #{resource_data(resource)}"puts
+    render json: {}, status: :ok
+  end
+
+  private 
+
+  def resource_data(resource)
+    {
+      id: resource.id,
+      email: resource.email,
+      nickname: resource.nickname,
+      keyIdAuth: resource.keyIdAuth,
+    }
+  end
+
+  def generate_jwt_token(user)
+    payload = { sub: user.id, exp: Time.now.to_i + 1.day.to_i } 
+    JWT.encode payload, Rails.application.credentials.devise_jwt_private_key, 'HS256' # Update algorithm if needed
+  end 
+
+  def drop_session_cookie
+    request.session_options[:skip] = true
+  end
+end

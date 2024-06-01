@@ -9,9 +9,9 @@ default: &default
 development:
   <<: *default
   database: apollo_api_development
-  username: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: db 
+  username: naimu
+  password: password
+  host: auth_ms_db #remember to change this to from db when executing the API GATEWAY
 
 test:
   <<: *default

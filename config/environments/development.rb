@@ -61,5 +61,6 @@ Rails.application.configure do
 
   config.force_ssl = false
 
+  config.hosts << "auth_ms:3000"
 
 end
